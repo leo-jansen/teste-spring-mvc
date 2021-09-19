@@ -3,13 +3,31 @@ package com.example.spring.testespringmvc.model;
 import java.math.BigDecimal;
 import java.time.LocalDate;
 
+import javax.persistence.Column;
+import javax.persistence.Entity;
+import javax.persistence.GeneratedValue;
+import javax.persistence.GenerationType;
+import javax.persistence.Id;
+import javax.persistence.Table;
+
+@Entity
+@Table(name = "pedidos")
 public class Pedido {
+  @Id
+  @GeneratedValue(strategy = GenerationType.IDENTITY)
+  private Integer id;
   private String nome;
   private BigDecimal valor;
+  @Column(name = "data_entrega")
   private LocalDate dataEntrega;
+  @Column(name = "url_imagem")
   private String urlImagem;
+  @Column(name = "url_produto")
   private String urlProduto;
   private String descricao;
+
+  public Pedido() {
+  }
 
   public Pedido(String nome, BigDecimal valor, LocalDate data, String urlImagem, String urlProduto, String descricao) {
     this.nome = nome;
