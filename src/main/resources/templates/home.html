@@ -1,20 +1,12 @@
 <!DOCTYPE html>
 <html>
 
-<head>
-  <meta charset='utf-8'>
-  <meta http-equiv='X-UA-Compatible' content='IE=edge'>
-  <meta name='viewport' content='width=device-width, initial-scale=1'>
-  <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.1.3/css/bootstrap.min.css"
-    integrity="sha384-MCw98/SFnGE8fJT3GXwEOngsV7Zt27NXFoaoApmYm81iuXoPkFOJwJ8ERdknLPMO" crossorigin="anonymous">
-  <title>Home</title>
-</head>
+<head th:replace="~{base::head('HOME')}"></head>
 
 <body>
+  <header th:replace="~{base::header}"></header>
   <div class="container">
-    <div class="jumbotron mb-0">
-      <h1 class="display-4">Meus pedidos</h1>
-    </div>
+    <div th:replace="~{base::titulo('Meus Pedidos')}"></div>
     <nav class="navbar navbar-expand navbar-light bg-light d-flex justify-content-between mb-3">
       <div class="navbar-nav">
         <a class="nav-item nav-link active" href="#">Todos</a>

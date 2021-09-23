@@ -1,10 +1,15 @@
 package com.example.spring.testespringmvc.dto;
 
+import javax.validation.constraints.NotBlank;
+
 import com.example.spring.testespringmvc.model.Pedido;
 
 public class PedidoTO {
+  @NotBlank
   private String nomeProduto;
+  @NotBlank
   private String urlProduto;
+  @NotBlank
   private String urlImagem;
   private String descricao;
 
