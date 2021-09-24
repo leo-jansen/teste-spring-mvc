@@ -29,6 +29,6 @@ public class PedidoController {
       return "pedido/formulario";
     }
     pedidoService.salvar(requisicao.toPedido());
-    return "pedido/formulario";
+    return "redirect:/home";
   }
 }

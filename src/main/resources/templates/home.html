@@ -9,34 +9,38 @@
     <div th:replace="~{base::titulo('Meus Pedidos')}"></div>
     <nav class="navbar navbar-expand navbar-light bg-light d-flex justify-content-between mb-3">
       <div class="navbar-nav">
-        <a class="nav-item nav-link active" href="#">Todos</a>
-        <a class="nav-item nav-link" href="#">Aguardando</a>
-        <a class="nav-item nav-link" href="#">Aprovado</a>
-        <a class="nav-item nav-link" href="#">Entregue</a>
+        <a th:classappend="${status} == null ? 'active'" class="nav-item nav-link" href="/home">Todos</a>
+        <a th:classappend="${status} == 'aguardando' ? 'active'" class="nav-item nav-link" href="/home/aguardando">Aguardando</a>
+        <a th:classappend="${status} == 'aprovado' ? 'active'" class="nav-item nav-link" href="/home/aprovado">Aprovado</a>
+        <a th:classappend="${status} == 'entregue' ? 'active'" class="nav-item nav-link" href="/home/entregue">Entregue</a>
       </div>
       <a href="/pedido/formulario"><button class="btn btn-outline-secondary my-2 my-sm-0">Novo</button></a>
     </nav>
-    <div th:each="pedido:${pedidos}" class="card mb-1">
-      <div th:text=${pedido.nome} class="card-header"></div>
+    <div th:each="pedido:${pedidos}" class="card mb-2">
+      <th:block th:switch="${pedido.status.name()}">
+        <div th:case="'AGUARDANDO'" th:text=${pedido.nome} class="card-header alert-warning"></div>
+        <div th:case="'APROVADO'" th:text=${pedido.nome} class="card-header alert-success"></div>
+        <div th:case="'ENTREGUE'" th:text=${pedido.nome} class="card-header alert-dark"></div>
+      </th:block>
       <div class="card-body">
         <div class="row">
           <div class="col-12 mb-3 col-sm-8">
             <div class="row">
-              <div class="col-md-5">Valor: <span th:text=${pedido.valor}></span></div>
-              <div class="col-md-7">Data da entrega: <span th:text=${pedido.dataEntrega}></span></div>
+              <div class="col-md-5">Valor: <span th:if="${pedido.valor} != null" th:text="${'R$ ' + #numbers.formatDecimal(pedido.valor,3,'POINT',2,'COMMA')}"></span></div>
+              <div class="col-md-7">Data da entrega: <span th:text="${#temporals.format(pedido.dataEntrega, 'dd/MM/yyyy')}"></span></div>
             </div>
             <div>
               <label for="urlProduto">Produto:</label>
-              <input th:value=${pedido.urlProduto} type="text" id="urlProduto" name="urlProduto" value="Url do produto"
+              <input th:value="${pedido.urlProduto}" type="text" id="urlProduto" name="urlProduto" value="Url do produto"
                 class="form-control">
             </div>
             <div>
               <label for="descricao">Descrição: </label>
-              <textarea th:text=${pedido.descricao} id="descricao" name="descricao" class="form-control"></textarea>
+              <textarea th:text="${pedido.descricao}" id="descricao" name="descricao" class="form-control"></textarea>
             </div>
           </div>
           <div class="col-12 col-sm-4">
-            <img th:src=${pedido.urlImagem} src="" class="img-thumbnail">
+            <img th:src="${pedido.urlImagem}" src="" class="img-thumbnail">
           </div>
         </div>
       </div>

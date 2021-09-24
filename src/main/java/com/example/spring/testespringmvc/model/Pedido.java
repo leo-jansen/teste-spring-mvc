@@ -5,6 +5,8 @@ import java.time.LocalDate;
 
 import javax.persistence.Column;
 import javax.persistence.Entity;
+import javax.persistence.EnumType;
+import javax.persistence.Enumerated;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
@@ -25,15 +27,18 @@ public class Pedido {
   @Column(name = "url_produto")
   private String urlProduto;
   private String descricao;
+  @Enumerated(EnumType.STRING)
+  private StatusPedido status;
 
   public Pedido() {
   }
 
-  public Pedido(String nome, String urlImagem, String urlProduto, String descricao) {
+  public Pedido(String nome, String urlImagem, String urlProduto, String descricao, StatusPedido status) {
     this.nome = nome;
     this.urlImagem = urlImagem;
     this.urlProduto = urlProduto;
     this.descricao = descricao;
+    this.status = status;
   }
 
   public Pedido(String nome, BigDecimal valor, LocalDate data, String urlImagem, String urlProduto, String descricao) {
@@ -67,5 +72,9 @@ public class Pedido {
 
   public String getDescricao() {
     return descricao;
+  }
+
+  public StatusPedido getStatus() {
+    return status;
   }
 }

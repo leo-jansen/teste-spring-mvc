@@ -1,6 +1,9 @@
 package com.example.spring.testespringmvc.service;
 
+import java.util.List;
+
 import com.example.spring.testespringmvc.model.Pedido;
+import com.example.spring.testespringmvc.model.StatusPedido;
 import com.example.spring.testespringmvc.repository.PedidoRepository;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -17,6 +20,10 @@ public class PedidoService {
 
   public Iterable<Pedido> buscarTodos() {
     return pedidoRepository.findAll();
+  }
+
+  public List<Pedido> buscarPorStatus(String status) {
+    return pedidoRepository.findByStatus(StatusPedido.valueOf(status.toUpperCase()));
   }
 
 }
