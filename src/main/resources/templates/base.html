@@ -9,7 +9,10 @@
 
 <header th:fragment="header" class="navbar navbar-expand navbar-dark bg-primary d-flex justify-content-between mb-3">
   <a class="navbar-brand" href="/home">HOME</a>
-  <a class="btn btn-outline-light" href="#">Login</a>
+  <a sec:authorize="!isAuthenticated()"class="btn btn-outline-light" href="/login">Login</a>
+  <form sec:authorize="isAuthenticated()" th:action="@{/logout}" method="POST">
+    <button class="btn btn-outline-light" type="submit">Logout</button>
+  </form>
 </header>
 
 <div th:fragment="titulo(valor)" class="jumbotron mb-0">
