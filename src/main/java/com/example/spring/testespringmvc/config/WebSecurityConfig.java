@@ -1,28 +1,45 @@
 package com.example.spring.testespringmvc.config;
 
-import org.springframework.context.annotation.Bean;
+import javax.sql.DataSource;
+
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Configuration;
+import org.springframework.security.config.annotation.authentication.builders.AuthenticationManagerBuilder;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
 import org.springframework.security.config.annotation.web.configuration.EnableWebSecurity;
 import org.springframework.security.config.annotation.web.configuration.WebSecurityConfigurerAdapter;
 import org.springframework.security.core.userdetails.User;
 import org.springframework.security.core.userdetails.UserDetails;
-import org.springframework.security.core.userdetails.UserDetailsService;
-import org.springframework.security.provisioning.InMemoryUserDetailsManager;
+import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 
 @Configuration
 @EnableWebSecurity
 public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
+  @Autowired
+  private DataSource dataSource;
+
   @Override
   protected void configure(HttpSecurity http) throws Exception {
-    http.authorizeRequests().anyRequest().authenticated().and().formLogin(form -> form.loginPage("/login").permitAll());
+    http.authorizeRequests().anyRequest().authenticated().and()
+        .formLogin(form -> form.loginPage("/login").defaultSuccessUrl("/home", true).permitAll());
   }
 
-  @Bean
   @Override
-  protected UserDetailsService userDetailsService() {
-    // metodo para test, não usar em produção
-    UserDetails user = User.withDefaultPasswordEncoder().username("teste").password("teste").roles("USER").build();
-    return new InMemoryUserDetailsManager(user);
+  protected void configure(AuthenticationManagerBuilder auth) throws Exception {
+    BCryptPasswordEncoder encoder = new BCryptPasswordEncoder();
+    // configurar um usuario
+    UserDetails user = User.builder().username("teste").password(encoder.encode("teste")).roles("USER").build();
+    // autenticar o usuario no banco de dados
+    auth.jdbcAuthentication().dataSource(dataSource).passwordEncoder(encoder).withUser(user);
   }
+  
+  /* 
+   * @Bean
+   * @Override
+   * protected UserDetailsService userDetailsService() {
+   *   // metodo paratest, não usar em produção
+   *   UserDetails user = User.withDefaultPasswordEncoder().username("teste").password("teste").roles("USER").build();
+   *   return new InMemoryUserDetailsManager(user);
+   * }
+  */
 }
