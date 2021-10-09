@@ -26,4 +26,8 @@ public class PedidoService {
     return pedidoRepository.findByStatus(StatusPedido.valueOf(status.toUpperCase()));
   }
 
+  public List<Pedido> buscarTodosPorUsuario(String username) {
+    return pedidoRepository.findAllByUsers(username);
+  }
+
 }

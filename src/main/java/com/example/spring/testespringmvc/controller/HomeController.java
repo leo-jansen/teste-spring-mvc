@@ -1,5 +1,6 @@
 package com.example.spring.testespringmvc.controller;
 
+import java.security.Principal;
 import java.util.List;
 
 import com.example.spring.testespringmvc.model.Pedido;
@@ -20,8 +21,8 @@ public class HomeController {
   private PedidoService pedidoService;
 
   @GetMapping
-  public String home(Model model) {
-    Iterable<Pedido> pedidos = pedidoService.buscarTodos();
+  public String home(Model model, Principal principal) {
+    List<Pedido> pedidos = pedidoService.buscarTodosPorUsuario(principal.getName());
     model.addAttribute("pedidos", pedidos);
     return "home";
   }
