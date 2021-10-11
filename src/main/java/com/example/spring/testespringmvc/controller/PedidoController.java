@@ -3,9 +3,12 @@ package com.example.spring.testespringmvc.controller;
 import javax.validation.Valid;
 
 import com.example.spring.testespringmvc.dto.PedidoTO;
+import com.example.spring.testespringmvc.model.Usuario;
 import com.example.spring.testespringmvc.service.PedidoService;
+import com.example.spring.testespringmvc.service.UsuarioService;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Controller;
 import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -18,6 +21,9 @@ public class PedidoController {
   @Autowired
   private PedidoService pedidoService;
 
+  @Autowired
+  private UsuarioService usuarioService;
+
   @GetMapping("formulario")
   public String formulario(PedidoTO requisicao) {
     return "pedido/formulario";
@@ -28,7 +34,10 @@ public class PedidoController {
     if (result.hasErrors()) {
       return "pedido/formulario";
     }
-    pedidoService.salvar(requisicao.toPedido());
+
+    String username = SecurityContextHolder.getContext().getAuthentication().getName(); 
+    Usuario usuario = usuarioService.buscarUsuario(username);
+    pedidoService.salvar(requisicao.toPedido(usuario));
     return "redirect:/home";
   }
 }

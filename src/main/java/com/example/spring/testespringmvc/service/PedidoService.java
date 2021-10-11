@@ -22,8 +22,8 @@ public class PedidoService {
     return pedidoRepository.findAll();
   }
 
-  public List<Pedido> buscarPorStatus(String status) {
-    return pedidoRepository.findByStatus(StatusPedido.valueOf(status.toUpperCase()));
+  public List<Pedido> buscarPorStatus(String status, String username) {
+    return pedidoRepository.findByStatusAndUsername(StatusPedido.valueOf(status.toUpperCase()), username);
   }
 
   public List<Pedido> buscarTodosPorUsuario(String username) {

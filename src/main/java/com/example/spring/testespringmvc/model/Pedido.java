@@ -37,12 +37,13 @@ public class Pedido {
   public Pedido() {
   }
 
-  public Pedido(String nome, String urlImagem, String urlProduto, String descricao, StatusPedido status) {
+  public Pedido(String nome, String urlImagem, String urlProduto, String descricao, StatusPedido status, Usuario usuario) {
     this.nome = nome;
     this.urlImagem = urlImagem;
     this.urlProduto = urlProduto;
     this.descricao = descricao;
     this.status = status;
+    this.usuario = usuario;
   }
 
   public Pedido(String nome, BigDecimal valor, LocalDate data, String urlImagem, String urlProduto, String descricao) {

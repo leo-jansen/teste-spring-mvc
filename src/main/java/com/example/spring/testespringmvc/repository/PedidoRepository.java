@@ -12,6 +12,8 @@ import org.springframework.stereotype.Repository;
 
 @Repository
 public interface PedidoRepository extends CrudRepository<Pedido, Integer> {
+  @Query("SELECT p FROM Pedido p JOIN p.usuario u WHERE p.status = :status AND u.username = :username")
+  List<Pedido> findByStatusAndUsername(@Param("status") StatusPedido status, @Param("username") String username);
 
   List<Pedido> findByStatus(StatusPedido status);
 

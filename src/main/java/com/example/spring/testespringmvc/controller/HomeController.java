@@ -7,6 +7,7 @@ import com.example.spring.testespringmvc.model.Pedido;
 import com.example.spring.testespringmvc.service.PedidoService;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.ExceptionHandler;
@@ -29,7 +30,8 @@ public class HomeController {
 
   @GetMapping("/{status}")
   public String statusPedido(@PathVariable("status") String status, Model model) {
-    List<Pedido> pedidos = pedidoService.buscarPorStatus(status);
+    String username = SecurityContextHolder.getContext().getAuthentication().getName();
+    List<Pedido> pedidos = pedidoService.buscarPorStatus(status, username);
     model.addAttribute("pedidos", pedidos);
     model.addAttribute("status", status);
     return "home";

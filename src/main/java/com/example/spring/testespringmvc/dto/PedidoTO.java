@@ -4,6 +4,7 @@ import javax.validation.constraints.NotBlank;
 
 import com.example.spring.testespringmvc.model.Pedido;
 import com.example.spring.testespringmvc.model.StatusPedido;
+import com.example.spring.testespringmvc.model.Usuario;
 
 public class PedidoTO {
   @NotBlank
@@ -46,7 +47,7 @@ public class PedidoTO {
     this.descricao = descricao;
   }
 
-  public Pedido toPedido() {
-    return new Pedido(this.nomeProduto, this.urlImagem, this.urlProduto, this.descricao, StatusPedido.AGUARDANDO);
+  public Pedido toPedido(Usuario usuario) {
+    return new Pedido(this.nomeProduto, this.urlImagem, this.urlProduto, this.descricao, StatusPedido.AGUARDANDO, usuario);
   }
 }
