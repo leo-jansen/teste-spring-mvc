@@ -7,6 +7,7 @@ import com.example.spring.testespringmvc.model.StatusPedido;
 import com.example.spring.testespringmvc.repository.PedidoRepository;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 
 @Service
@@ -30,8 +31,8 @@ public class PedidoService {
     return pedidoRepository.findAllByUsers(username);
   }
 
-  public List<Pedido> buscarPorStatus(StatusPedido status) {
-    return pedidoRepository.findByStatus(status);
+  public List<Pedido> buscarPorStatus(StatusPedido status, Pageable page) {
+    return pedidoRepository.findByStatus(status, page);
   }
 
 }
