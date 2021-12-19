@@ -38,6 +38,6 @@ public class PedidoController {
     String username = SecurityContextHolder.getContext().getAuthentication().getName(); 
     Usuario usuario = usuarioService.buscarUsuario(username);
     pedidoService.salvar(requisicao.toPedido(usuario));
-    return "redirect:/home";
+    return "redirect:/usuario";
   }
 }

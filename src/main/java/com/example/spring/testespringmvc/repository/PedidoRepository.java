@@ -15,7 +15,8 @@ public interface PedidoRepository extends CrudRepository<Pedido, Integer> {
   @Query("SELECT p FROM Pedido p JOIN p.usuario u WHERE p.status = :status AND u.username = :username")
   List<Pedido> findByStatusAndUsername(@Param("status") StatusPedido status, @Param("username") String username);
 
-  List<Pedido> findByStatus(StatusPedido status);
+  @Query("SELECT p FROM Pedido p JOIN p.usuario u WHERE p.status = :status")
+  List<Pedido> findByStatus(@Param("status") StatusPedido status);
 
   @Query("SELECT p FROM Pedido p JOIN p.usuario u where u.username = :username")
   List<Pedido> findAllByUsers(@Param("username") String username);
